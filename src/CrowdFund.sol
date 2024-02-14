@@ -101,6 +101,9 @@ contract CrowdFund {
     }
 
     function cancelCampaign(uint256 campaignId) public onlyManager(campaignId) {
+        if (campaignId >= campaigns.length) {
+            revert CampaignDoesNotExist(campaignId);
+        }
         if (
             ((campaigns[campaignId].deadline <= block.timestamp) ||
                 campaigns[campaignId].success)
@@ -112,6 +115,9 @@ contract CrowdFund {
     }
 
     function withdraw(uint256 campaignId) public onlyManager(campaignId) {
+        if (campaignId >= campaigns.length) {
+            revert CampaignDoesNotExist(campaignId);
+        }
         if (
             ((campaigns[campaignId].deadline <= block.timestamp) &&
                 campaigns[campaignId].success) == false
@@ -134,6 +140,9 @@ contract CrowdFund {
         uint bal = accountBalanceOf[msg.sender][campaignId];
         if ((bal > 0) == false) {
             revert CampaignNotBacked(campaignId);
+        }
+        if (campaignId >= campaigns.length) {
+            revert CampaignDoesNotExist(campaignId);
         }
         if (campaigns[campaignId].success) {
             revert CampaignSucceeded(campaignId);
@@ -158,7 +167,6 @@ contract CrowdFund {
         if (campaignId >= campaigns.length) {
             revert CampaignDoesNotExist(campaignId);
         }
-
         if (campaigns[campaignId].deadline <= block.timestamp) {
             revert CampaignEnded(campaignId);
         }
