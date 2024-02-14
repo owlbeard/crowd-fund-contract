@@ -5,17 +5,6 @@ import {Test, console} from "forge-std/Test.sol";
 import {CrowdFund} from "../src/CrowdFund.sol";
 
 contract TestCrowdFund is Test {
-    struct Campaign {
-        address manager;
-        uint256 id;
-        string title;
-        string description;
-        uint256 target;
-        uint256 startAt;
-        uint256 deadline;
-        bool finished;
-        bool success;
-    }
     CrowdFund public crowdFund;
     address public user = makeAddr("user");
     uint256 public constant AMOUNT = 100 ether;
